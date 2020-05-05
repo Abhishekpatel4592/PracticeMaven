@@ -1,6 +1,9 @@
 package com.Abhishek.app;
 
-import org.junit.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.Test;
+import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,13 +11,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 public class ReddifLogin {
-	
+	WebDriver driver;
 	
 	@Test
 	public void basePage() {
-		
+		System.out.println("Hello");
 		System.setProperty("webdriver.chrome.driver", "/Users/abhishekpatel/Desktop/chromedriver");
-		WebDriver driver = new ChromeDriver();
+		driver = new ChromeDriver();
 		driver.get("https://www.reddit.com/");
 		
 		driver.findElement(By.xpath("//div[@class='_1JBkpB_FOZMZ7IPr3FyNfH']/a")).click();
@@ -23,16 +26,29 @@ public class ReddifLogin {
 		
 		driver.switchTo().frame(frame);
 		
-		driver.findElement(By.id("loginUsername")).sendKeys("abhipatel4592@gmail.com");
+		driver.findElement(By.id("loginUsername")).sendKeys("abhipatel4592");
 		driver.findElement(By.id("loginPassword")).sendKeys("Hello");
 		driver.findElement(By.cssSelector(".AnimatedForm__submitButton")).click();
 		
-		boolean ErrorMessage = driver.findElement(By.cssSelector(".AnimatedForm__errorMessage")).isDisplayed();
-		Assert.assertTrue(ErrorMessage);
+		String ErrorMessage = driver.findElement(By.cssSelector(".AnimatedForm__errorMessage")).getText();
 		
-		//<div class="AnimatedForm__errorMessage" xpath="1">Incorrect password</div>
+		if(ErrorMessage == "Incorrect Username and Password") {
+			Assert.assertTrue(true);
+		}
+		else {
+			Assert.assertTrue(false);
+		}
+		
+		
+		driver.switchTo().parentFrame();
+		
 		
 		
 	}
+	
+	@AfterTest
+	public void close() {
+		driver.quit();
+		}
 
 }
