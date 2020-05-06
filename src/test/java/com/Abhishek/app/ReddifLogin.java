@@ -16,6 +16,7 @@ public class ReddifLogin {
 	@Test
 	public void basePage() {
 		System.out.println("Hello");
+		System.out.println("Hello");
 		System.setProperty("webdriver.chrome.driver", "/Users/abhishekpatel/Desktop/chromedriver");
 		driver = new ChromeDriver();
 		driver.get("https://www.reddit.com/");
